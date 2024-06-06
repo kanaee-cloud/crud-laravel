@@ -1,0 +1,1 @@
+Jurusan aku di {{ $jurusan }}

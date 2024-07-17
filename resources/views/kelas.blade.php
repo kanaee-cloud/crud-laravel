@@ -14,13 +14,12 @@
     /* Custom styles */
     body {
         font-family: 'Poppins', sans-serif;
-        padding: 40px;
-        
     }
 
     h1 {
         text-align: center;
         margin-bottom: 20px;
+        font-size: 30px;
     }
 
     .alert {
@@ -34,8 +33,8 @@
     }
 </style>
 <body>
-    
-<h1>Daftar Kelas</h1>
+@section('content')
+
 
 @session('success')
     <div class="alert alert-success">
@@ -49,7 +48,12 @@
     </div>
 @endsession
 
-<a href="{{ url('/kelas/create') }}" class="btn btn-primary">
+@extends('layouts.app')
+
+
+<h1 class="font-semibold text-2xl">Daftar Kelas SMKN 4 Bandung</h1>
+
+<a href="{{ url('/kelas/create') }}" class="btn btn-primary mb-3">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
@@ -94,6 +98,8 @@
     @endforeach
 </table>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-BUoZyjzCg+tnOz4L+9tjJEMN4S+xBTxg3fTq3/a6wwzV5wq2JwFkZ5TCt0tX4iS5" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-BUoZyjzCg+tnOz4L+9tjJEMN4S+xBTxg3fTq3/a6wwzV5wq2JwFkZ5TCt0tX4iS5" crossorigin="anonymous"></script>    
+@endsection
+
 </body>
 </html>

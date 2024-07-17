@@ -9,7 +9,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/siswa', [SiswaController::class, 'addBelajar']);
+Route::get('/siswa', [SiswaController::class, 'addBelajar'])->name('siswa');
 Route::post('/siswa', [SiswaController::class, 'storeSiswa']);
 Route::get('siswa/create', [SiswaController::class, 'createSiswa']);
 Route::get('/siswa/edit/{id}', [SiswaController::class, 'editSiswa']);
@@ -17,7 +17,7 @@ Route::patch('/siswa/{id}', [SiswaController::class, 'updateSiswa']);
 Route::delete('/siswa/{id}', [SiswaController::class, 'destroySiswa']);
 
 
-Route::get('/kelas', [KelasController::class, 'addKelas']);
+Route::get('/kelas', [KelasController::class, 'addKelas'])->name('kelas');
 Route::get('kelas/create', [KelasController::class, 'createKelas']);
 Route::post('/kelas', [KelasController::class, 'storeKelas']);
 Route::get('/kelas/edit/{id}', [KelasController::class, 'editKelas']);

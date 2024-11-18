@@ -63,7 +63,7 @@ class KelasController extends Controller
 
         $input = $request->all();
 
-        $jurusan = new Kelas();
+        $jurusan = Kelas::find($id);
         $jurusan -> nama_kelas = $input['nama_kelas'];
         $jurusan -> jurusan = $input['jurusan'];
         $jurusan -> lokasi_ruangan = $input['lokasi_ruangan'];

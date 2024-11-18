@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\ReportController;
@@ -28,6 +29,13 @@ Route::post('/kelas', [KelasController::class, 'storeKelas']);
 Route::get('/kelas/edit/{id}', [KelasController::class, 'editKelas']);
 Route::patch('/kelas/{id}', [KelasController::class, 'updateKelas']);
 Route::delete('/kelas/{id}', [KelasController::class, 'destroyKelas']);
+
+Route::get('/guru', [GuruController::class, 'index'])->name('guru');
+Route::post('/guru', [GuruController::class, 'store'])->name('guru');
+Route::get('/guru/create', [GuruController::class, 'create'])->name('guru');
+Route::get('/guru/edit/{id}', [GuruController::class, 'edit']);
+Route::patch('/guru/{id}', [GuruController::class, 'update']);
+Route::delete('/guru/{id}', [GuruController::class, 'destroy']);
 
 Route::get('/report', [ReportController::class, 'index'])->name('report.index');
 Route::post('/report', [ReportController::class, 'generate'])->name('report.generate');

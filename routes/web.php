@@ -2,11 +2,16 @@
 
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/student', [StudentController::class, 'index']);
+Route::get('/class', [StudentController::class, 'kelas']);
 
 
 Route::get('/siswa', [SiswaController::class, 'addBelajar'])->name('siswa');
@@ -24,5 +29,8 @@ Route::get('/kelas/edit/{id}', [KelasController::class, 'editKelas']);
 Route::patch('/kelas/{id}', [KelasController::class, 'updateKelas']);
 Route::delete('/kelas/{id}', [KelasController::class, 'destroyKelas']);
 
+Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+Route::post('/report', [ReportController::class, 'generate'])->name('report.generate');
 
-Route::get('/jurusan', [SiswaController::class, 'addJurusan']);
+
+

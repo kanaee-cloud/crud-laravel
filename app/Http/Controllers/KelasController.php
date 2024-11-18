@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Kelas;
 
 Validator::extend('alpha_dot_uppercase_numeric', function ($attribute, $value, $parameters, $validator) {
     return preg_match('/^[\d.A-Z]+$/', $value);
@@ -12,9 +13,7 @@ Validator::extend('alpha_dot_uppercase_numeric', function ($attribute, $value, $
 class KelasController extends Controller
 {
     function addKelas(){
-        $jurusan = DB::table('t_kelas')
-        ->orderBy('nama_kelas', 'ASC')
-        ->get();
+        $jurusan = Kelas::orderBy('nama_kelas')->get();
         return view('kelas', compact('jurusan'));
     }
 
@@ -26,14 +25,22 @@ class KelasController extends Controller
         
         $request->validate([
             'nama_kelas' => 'required|string',
-            'jurusan' => 'required|string',
-            'lokasi_ruangan' => 'required|alpha_dot_uppercase_numeric',
+           'jurusan' => 'required|string|in:Teknik Audio Visual,Desain Komunikasi Visual,Rekayasa Perangkat Lunak, Teknik Ketenagalistrikan, Teknik Otomasi Industri',
+            'lokasi_ruangan' => 'required|regex:/^[A-Z0-9.]+$/',
             'nama_wali_kelas' => 'required'
         ]);
 
         $input = $request->all();
-        unset($input['_token']);
-        $status = DB::table('t_kelas')->insert($input);
+
+        $jurusan = new Kelas();
+        $jurusan -> nama_kelas = $input['nama_kelas'];
+        $jurusan -> jurusan = $input['jurusan'];
+        $jurusan -> lokasi_ruangan = $input['lokasi_ruangan'];
+        $jurusan -> nama_wali_kelas = $input['nama_wali_kelas'];
+        
+
+        // unset($input['_token']);
+        $status = $jurusan->save();
         if($status){
             return redirect('/kelas')->with('success', 'Data berhasil ditambahkan');
         } else{
@@ -42,7 +49,7 @@ class KelasController extends Controller
     }
 
     function editKelas(Request $request, $id){
-        $jurusan = DB::table('t_kelas')->find($id);
+        $jurusan = Kelas::find($id);
         return view('kelas.form', compact('jurusan'));
     }
 
@@ -55,9 +62,17 @@ class KelasController extends Controller
         ]);
 
         $input = $request->all();
-        unset($input['_token']);
-        unset($input['_method']);
-        $status = DB::table('t_kelas')->where('id', $id)->update($input);
+
+        $jurusan = new Kelas();
+        $jurusan -> nama_kelas = $input['nama_kelas'];
+        $jurusan -> jurusan = $input['jurusan'];
+        $jurusan -> lokasi_ruangan = $input['lokasi_ruangan'];
+        $jurusan -> nama_wali_kelas = $input['nama_wali_kelas'];
+
+        // unset($input['_token']);
+        // unset($input['_method']);
+        $status = $jurusan->update();
+
         if($status){
             return redirect('/kelas')->with('success', 'Data berhasil diubah');
         }else{
@@ -66,7 +81,8 @@ class KelasController extends Controller
     }
 
    function destroyKelas($id){
-    $status = DB::table('t_kelas')->where('id', $id)->delete();
+    $jurusan = Kelas::find($id);
+    $status = $jurusan->delete();
     if($status){
         return redirect('/kelas')->with('success', 'Data berhasil dihapus');
     }else{
